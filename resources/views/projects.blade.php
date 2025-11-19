@@ -41,7 +41,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="{{ asset('style.css') }}">
-
+  </head>
 
   <body class="overflow-x-hidden bg-bodyBackground font-normal text-greyBg">
     <!-- START PRELOADER AREA-->
@@ -108,9 +108,9 @@
     <!-- / END MAGIC CURSOR AND BALL AREA-->
     <!-- START MENU DESIGN AREA-->
     @include('partials.header')
- <div class="container">
- @yield('content')
- </div>
+    <div class="container">
+      @yield('content')
+    </div>
 
     <!-- // END MENU DESIGN AREA-->
     <!-- START MOBILE MENU DESIGN AREA-->
@@ -150,113 +150,34 @@
       </div>
       <div class="container-fluid">
         <div class="portfolio-grid grid grid-cols-12 gap-6">
-          <!-- START SINGLE PORTFOLIO DESIGN AREA -->
-          <div class="portfolio-item category-1 col-span-12 md:col-span-6">
-            <a href="assets/images/projects/work1.jpg" class="work-popup">
-              <div class="portfolio-box">
-                <!-- Image -->
-                <img
-                  src="assets/images/projects/work1.jpg"
-                  alt=""
-                  data-rjs="2"
-                />
-                <!-- Category -->
-                <span class="portfolio-category">Branding</span>
-                <!-- Caption -->
-                <div class="portfolio-caption">
-                  <h1>Glasses of Cocktail</h1>
+          @foreach($projects as $index => $project)
+            <!-- START SINGLE PORTFOLIO DESIGN AREA -->
+            <div class="portfolio-item category-{{ ($index % 2) + 1 }} col-span-12 md:col-span-6 @if($index >= 2) xl:col-span-4 @endif">
+              @if($project['category'] == 'Video')
+                <a href="{{ $project['link'] }}" class="popup-youtube">
+              @elseif(Str::endsWith($project['link'], '.jpg') || Str::endsWith($project['link'], '.png'))
+                <a href="{{ $project['link'] }}" class="work-popup">
+              @else
+                <a href="{{ $project['link'] }}">
+              @endif
+                <div class="portfolio-box">
+                  <!-- Image -->
+                  <img
+                    src="{{ $project['image'] }}"
+                    alt="{{ $project['title'] }}"
+                    data-rjs="2"
+                  />
+                  <!-- Category -->
+                  <span class="portfolio-category">{{ $project['category'] }}</span>
+                  <!-- Caption -->
+                  <div class="portfolio-caption">
+                    <h1>{{ $project['title'] }}</h1>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </div>
-          <!-- // END SINGLE PORTFOLIO DESIGN AREA -->
-          <!-- START SINGLE PORTFOLIO DESIGN AREA -->
-          <div class="portfolio-item category-2 col-span-12 md:col-span-6">
-            <a href="single-project.html">
-              <div class="portfolio-box">
-                <!-- Image -->
-                <img
-                  src="assets/images/projects/work2.jpg"
-                  alt=""
-                  data-rjs="2"
-                />
-                <!-- Category -->
-                <span class="portfolio-category">Mockup</span>
-                <!-- Caption -->
-                <div class="portfolio-caption">
-                  <h1>A Branch with Flowers</h1>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- // END SINGLE PORTFOLIO DESIGN AREA -->
-          <!-- START SINGLE PORTFOLIO DESIGN AREA -->
-          <div
-            class="portfolio-item category-2 col-span-12 md:col-span-6 xl:col-span-4"
-          >
-            <a
-              href="https://www.youtube.com/watch?v=qZEPs3vmYB4"
-              class="popup-youtube"
-            >
-              <div class="portfolio-box">
-                <!-- Image -->
-                <img
-                  src="assets/images/projects/work3.jpg"
-                  alt=""
-                  data-rjs="2"
-                />
-                <!-- Category -->
-                <span class="portfolio-category">Video</span>
-                <!-- Caption -->
-                <div class="portfolio-caption">
-                  <h1>Orange Rose Flower</h1>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- // END SINGLE PORTFOLIO DESIGN AREA -->
-          <!-- START SINGLE PORTFOLIO DESIGN AREA -->
-          <div
-            class="portfolio-item category-1 col-span-12 md:col-span-6 xl:col-span-4"
-          >
-            <a href="assets/images/projects/work4.jpg" class="work-popup">
-              <div class="portfolio-box">
-                <!-- Image -->
-                <img
-                  src="assets/images/projects/work4.jpg"
-                  alt=""
-                  data-rjs="2"
-                />
-                <!-- Category -->
-                <span class="portfolio-category">Branding</span>
-                <!-- Caption -->
-                <div class="portfolio-caption">
-                  <h1>Green Plant on a Desk</h1>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- // END SINGLE PORTFOLIO DESIGN AREA -->
-          <!-- START SINGLE PORTFOLIO DESIGN AREA -->
-          <div class="portfolio-item category-2 md:col-span-6 xl:col-span-4">
-            <a href="assets/images/projects/work5.jpg" class="work-popup">
-              <div class="portfolio-box">
-                <!-- Image -->
-                <img
-                  src="assets/images/projects/work5.jpg"
-                  alt=""
-                  data-rjs="2"
-                />
-                <!-- Category -->
-                <span class="portfolio-category">Mockup</span>
-                <!-- Caption -->
-                <div class="portfolio-caption">
-                  <h1>Orange Rose Flower</h1>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- // END SINGLE PORTFOLIO DESIGN AREA -->
+              </a>
+            </div>
+            <!-- // END SINGLE PORTFOLIO DESIGN AREA -->
+          @endforeach
         </div>
       </div>
     </div>
@@ -291,5 +212,6 @@
     <script src="assets/js/wow.min.js"></script>
     <!-- SCRIPT JS-->
     <script src="assets/js/script.js"></script>
-  <script defer src="index.js"></script></body>
+    <script defer src="index.js"></script>
+  </body>
 </html>
